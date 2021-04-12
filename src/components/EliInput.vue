@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-bind:class="{errored: isValidationFailed}">
         <label v-bind:for="inputName">{{ inputLabel }}</label> <br v-if="!inline">
         <input v-bind:type="inputType"
             v-bind:class="{'full-width': isFullWidth}"
@@ -30,6 +30,11 @@ input:focus {
 br+input {
     margin-top: 12px;
 }
+
+.errored {
+    color: red;
+    border-color: #ff4848;
+}
 </style>
 
 <script lang="ts">
@@ -50,6 +55,7 @@ export default class EliInput extends Vue {
     @Prop() inputLabel!: string;
     @Prop() inputValue!: string | number;
     @Prop() inline!: boolean;
+    @Prop() isValidationFailed!: boolean;
     @Prop() onUserInput!: Function | undefined;
 }
 </script>
