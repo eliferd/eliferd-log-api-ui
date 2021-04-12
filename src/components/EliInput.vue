@@ -2,10 +2,11 @@
     <div>
         <label v-bind:for="inputName">{{ inputLabel }}</label> <br v-if="!inline">
         <input v-bind:type="inputType"
+            v-bind:class="{'full-width': isFullWidth}"
             v-bind:placeholder="inputPlaceholder"
             v-bind:name="inputName"
             v-bind:id="inputName"
-            v-on:input="onUserInput"
+            v-on:input="$emit('input', $event.target.value)"
             v-bind:value="inputValue">
     </div>
 </template>
@@ -17,9 +18,14 @@ input {
     border-width: 2px;
     border-style: solid;
     border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    box-sizing:border-box;
 }
 input:focus {
     outline: none;
+}
+.full-width {
+    width: 100%;
 }
 br+input {
     margin-top: 12px;
@@ -38,6 +44,7 @@ export enum EliInputTypeEnum {
 @Component
 export default class EliInput extends Vue {
     @Prop() inputType!: EliInputTypeEnum
+    @Prop() isFullWidth!: boolean;
     @Prop() inputPlaceholder!: string;
     @Prop() inputName!: string;
     @Prop() inputLabel!: string;
