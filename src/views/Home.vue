@@ -1,42 +1,40 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-    <EliButton label="Bouton" :clickEvent="onTestClick"/>
-    <EliButton label="Bouton 2" :disabled="true" :clickEvent="onTestClickTwo"/>
-    <br>
-    <EliInput :inputType="inputType.NUMBER" inputPlaceholder="Number" inputLabel="ALLO?" :onUserInput="eliInputOne"/>
-    <EliInput :inputType="inputType.TEXT" inputPlaceholder="Text" :onUserInput="eliInputOne"/>
-    <EliInput :inputType="inputType.PASSWORD" inputPlaceholder="Pwd" :onUserInput="eliInputOne"/>
+    <h1>Bienvenue, {{ fullname }}</h1>
+    <p>Cliquez sur un des boutons ci-dessous pour choisir l’application à observer.</p>
+    <div class="button-list">
+      <EliButton v-for="element of logsList" :key="element.id" :label="element.label" :clickEvent="navigateToAppLogPage"/>
+    </div>
   </div>
 </template>
-
+<style scoped>
+h1 {
+  font-weight: normal;
+  text-align: center;
+}
+</style>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
 import EliButton from '@/components/EliButton.vue'
-import EliInput, { EliInputTypeEnum } from '@/components/EliInput.vue'
 
 @Component({
   components: {
-    HelloWorld,
-    EliButton,
-    EliInput
+    EliButton
   }
 })
 export default class Home extends Vue {
-  inputType = EliInputTypeEnum;
+  logsList = [
+    { label: 'App 1', id: 'app1' },
+    { label: 'App 2', id: 'app2' },
+    { label: 'App 3', id: 'app3' },
+    { label: 'App 4', id: 'app4' },
+    { label: 'App 5', id: 'app5' }
+  ];
 
-  onTestClick (): void {
-    console.log('ALLO')
-  }
+  fullname = 'John Doe';
 
-  onTestClickTwo (): void {
-    console.log('la forme ?')
-  }
-
-  eliInputOne (event: Event) {
-    console.log(event)
+  navigateToAppLogPage (event: MouseEvent, btnId: string) {
+    console.log(btnId)
   }
 }
 </script>

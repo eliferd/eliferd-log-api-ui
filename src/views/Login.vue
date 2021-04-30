@@ -34,7 +34,7 @@ h1 {
   padding-top: 25px;
   max-width: 640px;
   width: 100%;
-  margin: auto;
+  margin: 20vh auto;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 0 40px 90px;
 }

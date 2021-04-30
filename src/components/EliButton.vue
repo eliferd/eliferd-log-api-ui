@@ -1,6 +1,6 @@
 <template>
     <input v-if="isSubmit" v-bind:form="form" type="submit" v-bind:value="label">
-    <button v-else v-bind:disabled="disabled" v-on:click="clickEvent">{{ label }}</button>
+    <button v-else v-bind:disabled="disabled">{{ label }}</button>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
@@ -11,7 +11,6 @@ export default class EliButton extends Vue {
     @Prop() disabled!: boolean;
     @Prop() isSubmit!: boolean;
     @Prop() form!: string;
-    @Prop() clickEvent!: Function;
 }
 </script>
 <style scoped>
