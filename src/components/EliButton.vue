@@ -1,6 +1,6 @@
 <template>
-    <input v-if="isSubmit" v-bind:form="form" type="submit" v-bind:value="label">
-    <button v-else v-bind:disabled="disabled">{{ label }}</button>
+    <input v-if="isSubmit" v-bind:form="form" type="submit" v-bind:value="label" v-bind:variant="variant">
+    <button v-else v-bind:disabled="disabled" v-bind:variant="variant">{{ label }}</button>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
@@ -11,6 +11,7 @@ export default class EliButton extends Vue {
     @Prop() disabled!: boolean;
     @Prop() isSubmit!: boolean;
     @Prop() form!: string;
+    @Prop() variant!: string;
 }
 </script>
 <style scoped>
@@ -36,5 +37,20 @@ button:focus, input[type=submit]:focus {
 button:disabled, input[type=submit]:disabled {
     background-color: #13b47193;
     cursor: default;
+}
+
+button[variant=red], input[type=submit][variant=red] {
+    background-color: #b41313;
+}
+button[variant=red]:hover, input[type=submit][variant=red]:hover {
+    background-color: #cd0f0f;
+}
+button[variant=red]:focus, input[type=submit][variant=red]:focus {
+    background-color: #961b1b;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem #b4131359;
+}
+button[variant=red]:disabled, input[type=submit][variant=red]:disabled {
+    background-color: #b4131393;
 }
 </style>

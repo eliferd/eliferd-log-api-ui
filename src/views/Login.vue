@@ -91,16 +91,26 @@ import EliInput, { EliInputTypeEnum } from '@/components/EliInput.vue'
 export default class Login extends Vue {
     inputType = EliInputTypeEnum;
     errors: string[] = [];
-    username = null;
-    password = null;
+    username = '';
+    password = '';
 
     authUser (e: Event) {
-      if (this.username && this.password) {
-        return true
-      }
       this.errors = []
       if (!this.username || !this.password) {
         this.errors.push('Champs requis manquant.')
+      }
+      if (this.username && this.password) {
+        try {
+          const form = new FormData()
+          form.append('username', this.username)
+          form.append('password', this.password)
+          this.$store.dispatch('login', { loginForm: form })
+          if (this.$store.getters.isAuthenticated) {
+            this.$router.push('/')
+          }
+        } catch (e) {
+          this.errors.push(e)
+        }
       }
       e.preventDefault()
     }

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import state from '../store/index'
 
 Vue.use(VueRouter)
 
@@ -9,7 +10,8 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    beforeEnter: (to, from, next) => !state.getters.isAuthenticated ? next('/login') : next()
   },
   {
     path: '/about',
@@ -22,7 +24,8 @@ const routes: Array<RouteConfig> = [
   {
     path: '/login',
     name: 'Connexion',
-    component: Login
+    component: Login,
+    beforeEnter: (to, from, next) => state.getters.isAuthenticated ? next('/') : next()
   }
 ]
 
