@@ -78,9 +78,9 @@ h1 {
 }
 </style>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import EliButton from '@/components/EliButton.vue'
-import EliInput, { EliInputTypeEnum } from '@/components/EliInput.vue'
+import { Component, Vue } from 'vue-property-decorator';
+import EliButton from '@/components/EliButton.vue';
+import EliInput, { EliInputTypeEnum } from '@/components/EliInput.vue';
 
 @Component({
   components: {
@@ -97,14 +97,11 @@ export default class Login extends Vue {
     authUser (e: Event) {
       this.errors = []
       if (!this.username || !this.password) {
-        this.errors.push('Champs requis manquant.')
+        this.errors.push('Champs requis manquant.');
       }
       if (this.username && this.password) {
         try {
-          const form = new FormData()
-          form.append('username', this.username)
-          form.append('password', this.password)
-          this.$store.dispatch('login', { loginForm: form })
+          this.$store.dispatch('login', { loginForm: { username: this.username, password: this.password } });
           if (this.$store.getters.isAuthenticated) {
             this.$router.push('/')
           }

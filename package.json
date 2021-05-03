@@ -49,9 +49,15 @@
       "@vue/typescript/recommended"
     ],
     "parserOptions": {
-      "ecmaVersion": 2020
+      "ecmaVersion": 2021
     },
-    "rules": {}
+    "rules": {
+      "space-before-function-paren": 0,
+      "semi":"off",
+      "camelcase": "warn",
+      "@typescript-eslint/camelcase": "warn",
+      "no-return-assign": "off"
+    }
   },
   "browserslist": [
     "> 1%",
