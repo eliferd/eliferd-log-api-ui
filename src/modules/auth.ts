@@ -7,6 +7,7 @@ export type User = {
     userId: number;
     username: string;
     roleId: number;
+    token: string;
 }
 export type LogLevels = {
     id_log_level: number;
@@ -24,8 +25,9 @@ export type LogEntity = {
     print_date: Date;
 }
 
-const state: {user: User | null; providers: LogProvider[] | null; logLevels: LogLevels[] | null; logs: LogEntity[] | null} = {
+const state: {user: User | null, errorMessage: string | null, providers: LogProvider[] | null, logLevels: LogLevels[] | null, logs: LogEntity[] | null} = {
   user: null,
+  errorMessage: null,
   providers: null,
   logLevels: null,
   logs: null
@@ -35,14 +37,15 @@ const getters = {
   StateUser: (state: any) => state.user,
   StateProviders: (state: any) => state.providers,
   StateLogLevels: (state: any) => state.logLevels,
-  StateLogs: (state: any) => state.logs
+  StateLogs: (state: any) => state.logs,
+  StateErrorMsg: (state: any) => state.errorMessage
 };
 const actions = {
-  async login({ commit }: { commit: Commit }, loginForm: { username: string; password: string }) {
-    const reqParams = { str_username: loginForm.username, str_password: loginForm.password };
-    const loginResponse = await axios.post('api/login', reqParams);
+  async login({ commit }: { commit: Commit }, loginForm: { username: string, password: string }) {
+    const loginResponse = await axios.post('api/login', { str_username: loginForm.username, str_password: loginForm.password });
+    const requestErrored = loginResponse.status.toString().startsWith('4') || loginResponse.status.toString().startsWith('5') || loginResponse.data?.message;
 
-    await commit('setUser', loginResponse.status === 200 ? loginResponse.data : null);
+    await commit(requestErrored ? 'setError' : 'setUser', requestErrored ? loginResponse.data.message : loginResponse.data.token);
   },
   async logout({ commit }: { commit: Commit }) {
     await commit('logout', null);
@@ -61,7 +64,9 @@ const actions = {
   }
 };
 const mutations = {
-  setUser(state: any, token: string) {
+  setUser(state: any, token: string) { 
+    localStorage.setItem('user-token', token);
+     
     const {
       id_user,
       str_username,
@@ -74,8 +79,12 @@ const mutations = {
       roleId: id_user_role
     };
   },
+  setError(state: any, errorMessage: string) {
+    state.errorMessage = errorMessage;
+  },
   logout(state: any) {
     Object.keys(state).forEach(prop => state[prop] = null);
+    localStorage.removeItem('user-token');
   },
   setLogLevelsList(state: any, logLevels: LogLevels[]) {
     state.logLevels = logLevels;

@@ -101,9 +101,12 @@ export default class Login extends Vue {
       }
       if (this.username && this.password) {
         try {
-          this.$store.dispatch('login', { loginForm: { username: this.username, password: this.password } });
+          this.$store.dispatch('login', { username: this.username, password: this.password });
+
           if (this.$store.getters.isAuthenticated) {
             this.$router.push('/')
+          } else {
+            this.errors.push(this.$store.getters?.StateErrorMsg)
           }
         } catch (e) {
           this.errors.push(e)

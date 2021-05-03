@@ -36,6 +36,7 @@ p {
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import EliButton from '@/components/EliButton.vue'
+import { LogProvider } from '@/modules/auth';
 
 @Component({
   components: {
@@ -43,18 +44,19 @@ import EliButton from '@/components/EliButton.vue'
   }
 })
 export default class Home extends Vue {
-  logsList = [
-    { label: 'App 1', id: 'app1' },
-    { label: 'App 2', id: 'app2' },
-    { label: 'App 3', id: 'app3' },
-    { label: 'App 4', id: 'app4' },
-    { label: 'App 5', id: 'app5' }
-  ];
+  logsList: {label: string; id: string}[] = [];
 
-  fullname = 'John Doe';
+  fullname = this.$store.getters.StateUser.username.charAt(0).toUpperCase() + this.$store.getters.StateUser.username.slice(1);
 
   navigateToAppLogPage (event: MouseEvent, test: string) {
     console.log(test)
+  }
+
+  async created() {
+    await this.$store.dispatch('getProviders');
+
+    // eslint-disable-next-line no-unused-expressions
+    await this.$store.getters.StateProviders?.forEach((provider: LogProvider) => this.logsList.push({ label: provider.str_provider_name.charAt(0).toUpperCase() + provider.str_provider_name.slice(1), id: provider.str_provider_name }))
   }
 
   async logout () {
