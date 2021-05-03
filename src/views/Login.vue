@@ -1,5 +1,8 @@
 <template>
     <div class="login-container">
+        <div v-if="isLoading" v-bind:class="{ loading: isLoading }">
+          <span>Chargement...</span>
+        </div>
         <h1>Connexion</h1>
         <div class="error-stack" v-if="errors.length > 0">
           <ul>
@@ -37,6 +40,18 @@ h1 {
   margin: 20vh auto;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 0 40px 90px;
+}
+.loading {
+  background-color: rgba(255, 255, 255, 0.705);
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.loading>span {
+  margin: auto;
 }
 #login_form {
   padding: 0 80px;
@@ -93,6 +108,10 @@ export default class Login extends Vue {
     errors: string[] = [];
     username = '';
     password = '';
+
+    get isLoading() {
+      return this.$store.getters.isLoading;
+    }
 
     authUser (e: Event) {
       this.errors = []

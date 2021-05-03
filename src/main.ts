@@ -2,16 +2,30 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-// eslint-disable-next-line
-let userToken = localStorage.getItem('user-token');
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
-if (userToken) {
+axios.interceptors.request.use((config: AxiosRequestConfig) => {
+  store.commit('loading', true);
+  return config;
+}, (err) => {
+  store.commit('loading', false);
+  return Promise.reject(err);
+})
+
+axios.interceptors.response.use((response: AxiosResponse) => {
+  store.commit('loading', false);
+  return response;
+}, (err) => {
+  store.commit('loading', false);
+  return Promise.reject(err);
+})
+
+if (store.getters.StateUser) {
   // eslint-disable-next-line
-  axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
+  axios.defaults.headers.common['Authorization'] = `Bearer ${store.getters.StateUser.token}`
 }
 axios.defaults.baseURL = 'http://localhost:4000/';
 

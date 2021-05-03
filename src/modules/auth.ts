@@ -1,7 +1,8 @@
 /* eslint-disable */
-import axios from 'axios'
-import jwt_decode from 'jwt-decode'
-import { Commit } from 'vuex'
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
+import { Commit } from 'vuex';
+import router from '../router/index'
 
 export type User = {
     userId: number;
@@ -25,8 +26,9 @@ export type LogEntity = {
     print_date: Date;
 }
 
-const state: {user: User | null, errorMessage: string | null, providers: LogProvider[] | null, logLevels: LogLevels[] | null, logs: LogEntity[] | null} = {
+const state: {user: User | null, isLoading: boolean, errorMessage: string | null, providers: LogProvider[] | null, logLevels: LogLevels[] | null, logs: LogEntity[] | null} = {
   user: null,
+  isLoading: false,
   errorMessage: null,
   providers: null,
   logLevels: null,
@@ -34,6 +36,7 @@ const state: {user: User | null, errorMessage: string | null, providers: LogProv
 };
 const getters = {
   isAuthenticated: (state: any) => !!state.user,
+  isLoading: (state: any) => state.isLoading,
   StateUser: (state: any) => state.user,
   StateProviders: (state: any) => state.providers,
   StateLogLevels: (state: any) => state.logLevels,
@@ -64,9 +67,10 @@ const actions = {
   }
 };
 const mutations = {
+  loading(state: any, isLoading: boolean) {
+    state.isLoading = isLoading;
+  },
   setUser(state: any, token: string) { 
-    localStorage.setItem('user-token', token);
-     
     const {
       id_user,
       str_username,
@@ -76,15 +80,16 @@ const mutations = {
     state.user = {
       userId: id_user,
       username: str_username,
-      roleId: id_user_role
+      roleId: id_user_role,
+      token
     };
+    router.push('/');
   },
   setError(state: any, errorMessage: string) {
     state.errorMessage = errorMessage;
   },
   logout(state: any) {
     Object.keys(state).forEach(prop => state[prop] = null);
-    localStorage.removeItem('user-token');
   },
   setLogLevelsList(state: any, logLevels: LogLevels[]) {
     state.logLevels = logLevels;
