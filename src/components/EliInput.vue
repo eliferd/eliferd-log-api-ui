@@ -48,7 +48,7 @@ export enum EliInputTypeEnum {
 
 @Component
 export default class EliInput extends Vue {
-    @Prop() inputType!: EliInputTypeEnum
+    @Prop() inputType!: EliInputTypeEnum;
     @Prop() isFullWidth!: boolean;
     @Prop() inputPlaceholder!: string;
     @Prop() inputName!: string;

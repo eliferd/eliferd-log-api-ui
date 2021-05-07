@@ -1,11 +1,11 @@
-import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
-import Logs from '../views/Logs.vue'
-import state from '../store/index'
+import Vue from 'vue';
+import VueRouter, { RouteConfig } from 'vue-router';
+import Home from '../views/Home.vue';
+import Login from '../views/Login.vue';
+import Logs from '../views/Logs.vue';
+import state from '../store/index';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
@@ -26,10 +26,10 @@ const routes: Array<RouteConfig> = [
     component: Login,
     beforeEnter: (to, from, next) => state.getters.isAuthenticated ? next('/') : next()
   }
-]
+];
 
 const router = new VueRouter({
   routes
-})
+});
 
-export default router
+export default router;

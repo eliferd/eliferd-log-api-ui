@@ -2,6 +2,7 @@
     <input v-if="isSubmit" v-bind:form="form" type="submit" v-bind:value="label" v-bind:variant="variant">
     <button v-else v-bind:disabled="disabled" v-bind:variant="variant">{{ label }}</button>
 </template>
+
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 

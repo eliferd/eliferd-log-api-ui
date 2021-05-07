@@ -49,20 +49,21 @@ export default class Home extends Vue {
   fullname = this.$store.getters.StateUser.username.charAt(0).toUpperCase() + this.$store.getters.StateUser.username.slice(1);
 
   navigateToAppLogPage (event: MouseEvent, logAppId: string) {
-    this.$router.push('/app/' + logAppId)
+    this.$router.push('/app/' + logAppId);
   }
 
   async created() {
     if (this.$store.getters.StateUser) {
       await this.$store.dispatch('getProviders');
       // eslint-disable-next-line no-unused-expressions
-      await this.$store.getters.StateProviders?.forEach((provider: LogProvider) => this.logsList.push({ label: provider.str_provider_name.charAt(0).toUpperCase() + provider.str_provider_name.slice(1), id: provider.str_provider_name }))
+      await this.$store.getters.StateProviders?.forEach(
+        (provider: LogProvider) => this.logsList.push({ label: provider.str_provider_name.charAt(0).toUpperCase() + provider.str_provider_name.slice(1), id: provider.str_provider_name }));
     }
   }
 
   async logout () {
-    await this.$store.dispatch('logout')
-    this.$router.push('/login')
+    await this.$store.dispatch('logout');
+    this.$router.push('/login');
   }
 }
 </script>

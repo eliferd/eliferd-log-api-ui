@@ -20,7 +20,7 @@ export default class Logs extends Vue {
       const { StateProviders, StateLogLevels, StateLogs } = this.$store.getters;
 
       if (!StateProviders.some((p: LogProvider) => p.str_provider_name === this.$route.params.appId)) {
-        this.$router.push('/')
+        this.$router.push('/');
       }
       Promise.all([
         this.$store.dispatch('getLevels'),
@@ -31,7 +31,7 @@ export default class Logs extends Vue {
         this.appLogsLevelsList = StateLogLevels;
         console.log(this.appLogsList, 'appLogsList');
         console.log(this.appLogsLevelsList, 'appLogsLevelsList');
-      }).catch(e => console.log(e))
+      }).catch(e => console.log(e));
     }
 }
 </script>
