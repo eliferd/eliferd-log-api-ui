@@ -8,7 +8,6 @@ export type User = {
     userId: number;
     username: string;
     roleId: number;
-    token: string;
 }
 export type LogLevels = {
     id_log_level: number;
@@ -71,6 +70,7 @@ const mutations = {
     state.isLoading = isLoading;
   },
   setUser(state: any, token: string) { 
+    localStorage.setItem('userToken', token);
     const {
       id_user,
       str_username,
@@ -80,8 +80,7 @@ const mutations = {
     state.user = {
       userId: id_user,
       username: str_username,
-      roleId: id_user_role,
-      token
+      roleId: id_user_role
     };
     router.push('/');
   },
@@ -90,6 +89,7 @@ const mutations = {
   },
   logout(state: any) {
     Object.keys(state).forEach(prop => state[prop] = null);
+    localStorage.removeItem('userToken');
   },
   setLogLevelsList(state: any, logLevels: LogLevels[]) {
     state.logLevels = logLevels;
