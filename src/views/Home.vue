@@ -48,8 +48,8 @@ export default class Home extends Vue {
 
   fullname = this.$store.getters.StateUser.username.charAt(0).toUpperCase() + this.$store.getters.StateUser.username.slice(1);
 
-  navigateToAppLogPage (event: MouseEvent, test: string) {
-    console.log(test)
+  navigateToAppLogPage (event: MouseEvent, logAppId: string) {
+    this.$router.push('/app/' + logAppId)
   }
 
   async created() {

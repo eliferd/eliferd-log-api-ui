@@ -17,7 +17,8 @@ const routes: Array<RouteConfig> = [
   {
     path: '/app/:appId',
     name: 'Logs',
-    component: Logs
+    component: Logs,
+    beforeEnter: (to, from, next) => !state.getters.isAuthenticated ? next('/login') : next()
   },
   {
     path: '/login',
