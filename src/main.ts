@@ -1,8 +1,11 @@
 import Vue from 'vue';
+import moment from 'moment';
 import App from './App.vue';
 import router from './router';
 import store from './store';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+
+moment.locale('fr');
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -22,7 +25,7 @@ axios.interceptors.request.use((config: AxiosRequestConfig) => {
 axios.interceptors.response.use((response: AxiosResponse) => {
   store.commit('loading', false);
   return response;
-}, (err) => {
+}, (err: AxiosError) => {
   store.commit('loading', false);
   return Promise.reject(err);
 })
@@ -38,6 +41,16 @@ axios.interceptors.response.use(undefined, (error: AxiosError) => {
 })
 
 Vue.config.productionTip = false
+
+Vue.filter('parseDate', (value: number | Date | null) => {
+  if (!value) return '';
+  return moment(value).format('DD/MM/YYYY - HH[h]mm[:]ss');
+});
+
+Vue.filter('capitalize', function (value: string | null) {
+  if (!value) return '';
+  return value.charAt(0).toUpperCase() + value.slice(1);
+})
 
 new Vue({
   router,
