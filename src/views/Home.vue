@@ -9,7 +9,7 @@
                  v-on:click.native="navigateToAppLogPage($event, element.id)"
                  class="app-btn"/>
     </div>
-    <DisconnectButton />
+    <DisconnectButton small="true"/>
   </div>
 </template>
 <style scoped>
@@ -55,6 +55,8 @@ export default class Home extends Vue {
   }
 
   async created() {
+    document.title = this.$route.meta.title;
+
     if (this.$store.getters.StateUser) {
       await this.$store.dispatch('getProviders');
       // eslint-disable-next-line no-unused-expressions

@@ -22,6 +22,7 @@ export type LogEntity = {
     id_log_provider: number;
     id_log_level: number;
     str_message: string;
+    str_level: string;
     print_date: Date;
 }
 

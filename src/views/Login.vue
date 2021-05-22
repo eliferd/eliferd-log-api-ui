@@ -1,33 +1,32 @@
 <template>
-    <div class="login-container">
-        <div v-if="isLoading" v-bind:class="{ loading: isLoading }">
-          <span>Chargement...</span>
-        </div>
-        <h1>Connexion</h1>
-        <div class="error-stack" v-if="errors.length > 0">
-          <ul>
-            <li v-for="err in errors" v-bind:key="err">
-              {{ err }}
-            </li>
-          </ul>
-        </div>
-        <form id="login_form" method="post" v-on:submit="authUser">
-            <EliInput class="login-input"
-                      :inputType="inputType.TEXT"
-                      inputName="username"
-                      inputLabel="Identifiant"
-                      v-model="username"
-                      :isFullWidth="true"/>
-            <EliInput class="login-input"
-                      :inputType="inputType.PASSWORD"
-                      inputName="password"
-                      inputLabel="Mot de passe"
-                      v-model="password"
-                      :isFullWidth="true"/>
-        </form>
-        <input type="submit" form="login_form" class="login-btn" value="Se connecter">
+  <div class="login-container">
+    <Loading/>
+    <h1>Connexion</h1>
+    <div class="error-stack" v-if="errors.length > 0">
+      <ul>
+        <li v-for="err in errors" v-bind:key="err">
+          {{ err }}
+        </li>
+      </ul>
     </div>
+    <form id="login_form" method="post" v-on:submit="authUser">
+      <EliInput class="login-input"
+                :inputType="inputType.TEXT"
+                inputName="username"
+                inputLabel="Identifiant"
+                v-model="username"
+                :isFullWidth="true"/>
+      <EliInput class="login-input"
+                :inputType="inputType.PASSWORD"
+                inputName="password"
+                inputLabel="Mot de passe"
+                v-model="password"
+                :isFullWidth="true"/>
+    </form>
+    <input type="submit" form="login_form" class="login-btn" value="Se connecter">
+  </div>
 </template>
+
 <style scoped>
 h1 {
   font-weight: normal;
@@ -40,18 +39,6 @@ h1 {
   margin: 20vh auto;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 0 40px 90px;
-}
-.loading {
-  background-color: rgba(255, 255, 255, 0.705);
-  z-index: 2;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-.loading>span {
-  margin: auto;
 }
 #login_form {
   padding: 0 80px;
@@ -92,15 +79,18 @@ h1 {
   color: white;
 }
 </style>
+
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import EliButton from '@/components/EliButton.vue';
 import EliInput, { EliInputTypeEnum } from '@/components/EliInput.vue';
+import Loading from '@/components/shared/Loading.vue';
 
 @Component({
   components: {
     EliButton,
-    EliInput
+    EliInput,
+    Loading
   }
 })
 export default class Login extends Vue {
@@ -109,8 +99,8 @@ export default class Login extends Vue {
     username = '';
     password = '';
 
-    get isLoading() {
-      return this.$store.getters.isLoading;
+    created() {
+      document.title = this.$route.meta.title;
     }
 
     authUser (e: Event) {

@@ -1,6 +1,9 @@
 <template>
-    <input v-if="isSubmit" v-bind:form="form" type="submit" v-bind:value="label" v-bind:variant="variant">
-    <button v-else v-bind:disabled="disabled" v-bind:variant="variant">{{ label }}</button>
+    <input v-if="isSubmit" v-bind:form="form" type="submit" v-bind:value="label" v-bind:variant="variant" v-bind:class="{ small }">
+    <button v-else v-bind:disabled="disabled" v-bind:variant="variant" v-bind:class="{ small }">
+        <font-awesome-icon v-if="icon" :icon="['fas', icon]" />
+        {{ label }}
+    </button>
 </template>
 
 <script lang="ts">
@@ -13,6 +16,8 @@ export default class EliButton extends Vue {
     @Prop() isSubmit!: boolean;
     @Prop() form!: string;
     @Prop() variant!: string;
+    @Prop() small!: boolean;
+    @Prop() icon!: string;
 }
 </script>
 <style scoped>
@@ -53,5 +58,8 @@ button[variant=red]:focus, input[type=submit][variant=red]:focus {
 }
 button[variant=red]:disabled, input[type=submit][variant=red]:disabled {
     background-color: #b4131393;
+}
+.small {
+    font-size: 0.8rem;
 }
 </style>

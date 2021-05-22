@@ -1,5 +1,5 @@
 <template>
-    <EliButton label="Déconnexion" variant="red" v-on:click.native="logout()"/>
+    <EliButton label="Déconnexion" variant="red" icon="power-off" :small="small" v-on:click.native="logout()"/>
 </template>
 <style scoped>
 

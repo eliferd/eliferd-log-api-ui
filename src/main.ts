@@ -5,6 +5,14 @@ import router from './router';
 import store from './store';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
+import { IconDefinition, library } from '@fortawesome/fontawesome-svg-core';
+import { faArrowAltCircleLeft, faSyncAlt, faPowerOff, faCog } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+const faIconsList: Array<IconDefinition> = [
+  faArrowAltCircleLeft, faSyncAlt, faPowerOff, faCog
+];
+
 moment.locale('fr');
 
 axios.defaults.withCredentials = true;
@@ -51,6 +59,10 @@ Vue.filter('capitalize', function (value: string | null) {
   if (!value) return '';
   return value.charAt(0).toUpperCase() + value.slice(1);
 })
+
+library.add(...faIconsList);
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 new Vue({
   router,
