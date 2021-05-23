@@ -187,6 +187,7 @@ export default class Logs extends Vue {
       if (!StateProviders.some((p: LogProvider) => p.str_provider_name === this.$route.params.appId)) {
         this.$router.push('/');
       }
+
       Promise.all([
         this.$store.dispatch('getLevels'),
         this.$store.dispatch('getProviders'),
