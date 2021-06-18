@@ -42,7 +42,7 @@
       </section>
 
       <section class="bottom-btns">
-        <table >
+        <table>
           <tr>
             <th colspan="2" align="left">
               <EliButton label="Revenir à la liste des applications"
@@ -60,6 +60,17 @@
             </th>
           </tr>
         </table>
+        <div class="mobile-bottom-btns">
+          <EliButton label="Revenir à la liste des applications"
+                         icon="arrow-alt-circle-left"
+                         v-on:click.native="$router.push('/')"
+                         small="true"/>
+          <EliButton label="Raffraichir les logs"
+                         icon="sync-alt"
+                         v-on:click.native="refreshList()"
+                         small="true"/>
+          <DisconnectButton small="true"/>
+        </div>
       </section>
     </div>
 </template>
@@ -104,6 +115,7 @@ table {
   height: 100%;
   border-collapse: separate;
   border-spacing: 2px 15px;
+  overflow-x: auto;
 }
 .bottom-btns {
   display: block;
@@ -111,6 +123,9 @@ table {
 }
 .bottom-btns th:first-child>button {
   margin-right: 24px;
+}
+.mobile-bottom-btns{
+  display: none;
 }
 .log-row {
   background-color: #F4F4F4;
@@ -157,6 +172,20 @@ table {
 .bgSevere {
   background-color: #F34545;
   color: white;
+}
+
+@media (max-width: 720px) {
+  table>tr {
+    display: none;
+  }
+  .mobile-bottom-btns{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .mobile-bottom-btns button {
+    margin: 4px 0;
+  }
 }
 </style>
 
