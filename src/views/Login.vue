@@ -115,7 +115,7 @@ export default class Login extends Vue {
           if (this.$store.getters.isAuthenticated) {
             this.$router.push('/');
           } else {
-            this.errors.push(this.$store.getters?.StateErrorMsg);
+            this.errors.push(this.$store.getters?.StateErrorMsg ?? 'Une erreur inconnue est survenue. Veuillez réessayer.');
           }
         } catch (e) {
           this.errors.push(e);
