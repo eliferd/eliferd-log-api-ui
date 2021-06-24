@@ -175,7 +175,7 @@ table {
 }
 
 @media (max-width: 720px) {
-  table>tr {
+  .bottom-btns>table>tr {
     display: none;
   }
   .mobile-bottom-btns{
