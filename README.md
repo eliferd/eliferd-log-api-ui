@@ -1,4 +1,6 @@
-# eliferd-log-api-ui
+# Eliferd's Log API (UI)
+
+For further informations about this project, <a href="https://github.com/eliferd/eliferd-log-api">please read the README of the backend repo</a>.
 
 ## Project setup
 ```
